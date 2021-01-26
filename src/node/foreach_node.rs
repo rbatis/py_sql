@@ -4,6 +4,7 @@ use crate::node::node_type::NodeType;
 use rexpr::ast::Node;
 use rexpr::runtime::RExprRuntime;
 use serde_json::{json, Value};
+
 #[derive(Clone, Debug)]
 pub struct ForEachNode {
     pub childs: Vec<NodeType>,
@@ -70,27 +71,25 @@ impl RbatisAST for ForEachNode {
         if collection_value.is_array() {
             let collection = collection_value.as_array().unwrap();
             let collection_len = collection.len() as i32;
+            let mut env_temp = env.clone();
             let mut index = -1;
             for item in collection {
                 index = index + 1;
-                env[&self.item] = item.clone();
-                env[&self.index] = json!(index);
-                do_child_nodes(convert, &self.childs, env, engine, arg_array, arg_sql)?;
-                env[&self.item] = serde_json::Value::Null;
-                env[&self.index] = serde_json::Value::Null;
+                env_temp[&self.item] = item.clone();
+                env_temp[&self.index] = json!(index);
+                do_child_nodes(convert, &self.childs, &mut env_temp, engine, arg_array, arg_sql)?;
             }
             return Result::Ok(serde_json::Value::Null);
         } else if collection_value.is_object() {
             let collection = collection_value.as_object().unwrap();
             let collection_len = collection.len() as i32;
+            let mut env_temp = env.clone();
             let mut index = -1;
             for (key, item) in collection {
                 index = index + 1;
-                env[&self.item] = item.clone();
-                env[&self.index] = json!(key);
-                do_child_nodes(convert, &self.childs, env, engine, arg_array, arg_sql)?;
-                env[&self.item] = serde_json::Value::Null;
-                env[&self.index] = serde_json::Value::Null;
+                env_temp[&self.item] = item.clone();
+                env_temp[&self.index] = json!(key);
+                do_child_nodes(convert, &self.childs, &mut env_temp, engine, arg_array, arg_sql)?;
             }
             return Result::Ok(serde_json::Value::Null);
         } else {
