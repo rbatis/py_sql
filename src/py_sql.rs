@@ -1,15 +1,8 @@
-use std::collections::hash_map::RandomState;
 use std::collections::HashMap;
-use std::hash::Hash;
-use std::ops::{Deref, Index};
-use std::sync::{Mutex, RwLock};
-
-use dashmap::mapref::one::Ref;
 use dashmap::DashMap;
-use rexpr::ast::Node;
-use rexpr::lexer::lexer;
+
 use rexpr::runtime::RExprRuntime;
-use serde_json::json;
+
 use serde_json::Value;
 
 use crate::error::Error;
@@ -22,7 +15,7 @@ use crate::node::node::do_child_nodes;
 use crate::node::node_type::NodeType;
 use crate::node::otherwise_node::OtherwiseNode;
 use crate::node::print_node::PrintNode;
-use crate::node::proxy_node::{NodeFactory, ProxyNode};
+use crate::node::proxy_node::{NodeFactory};
 use crate::node::set_node::SetNode;
 use crate::node::string_node::StringNode;
 use crate::node::trim_node::TrimNode;
@@ -64,9 +57,11 @@ impl PyRuntime {
                 do_child_nodes(driver_type, &v, env, engine, &mut arg_array, &mut sql)?;
             }
             _ => {
+                let nodes=Self::parse(engine, py_sql, &self.generate)?;
+                do_child_nodes(driver_type, &nodes, env, engine, &mut arg_array, &mut sql)?;
                 self.cache.insert(
                     py_sql.to_string(),
-                    Self::parse(engine, py_sql, &self.generate)?,
+                    nodes,
                 );
             }
         }
@@ -129,9 +124,7 @@ impl PyRuntime {
         runtime: &RExprRuntime,
         factorys: &Vec<Box<dyn NodeFactory>>,
         trim_express: &str,
-        main_node: &mut Vec<NodeType>,
         source_str: &str,
-        space: usize,
         childs: Vec<NodeType>,
     ) -> Result<NodeType, crate::error::Error> {
         if trim_express.starts_with(IfNode::name()) {
@@ -234,7 +227,7 @@ impl PyRuntime {
                         let index = len - 1 - index;
                         let item = vecs[index];
                         childs = vec![Self::parse_trim_node(
-                            runtime, generates, item, main_node, x, space, childs,
+                            runtime, generates, item,  x, childs,
                         )?];
                         if index == 0 {
                             for x in &childs {
@@ -246,7 +239,7 @@ impl PyRuntime {
                 }
             }
             let node =
-                Self::parse_trim_node(runtime, generates, trim_x, main_node, x, space, childs)?;
+                Self::parse_trim_node(runtime, generates, trim_x, x, childs)?;
             main_node.push(node);
             return Ok(());
         } else {
@@ -304,7 +297,6 @@ impl PyRuntime {
                 }
             }
         }
-        let ss = result.as_str();
         return (result, skip_line);
     }
 

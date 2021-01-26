@@ -1,13 +1,6 @@
-use core::borrow::BorrowMut;
-use std::ops::DerefMut;
-
-use serde_json::{json, Value};
-
+use serde_json::{Value};
 use crate::ast::RbatisAST;
 use crate::node::node_type::NodeType;
-use crate::node::node_type::NodeType::NString;
-use crate::node::otherwise_node::OtherwiseNode;
-use crate::node::string_node::StringNode;
 use rexpr::runtime::RExprRuntime;
 
 #[derive(Clone, Debug)]
@@ -22,7 +15,7 @@ impl ChooseNode {
         express: &str,
         childs: Vec<NodeType>,
     ) -> Result<Self, crate::error::Error> {
-        let express = express["choose".len()..].trim();
+        //let express = express["choose".len()..].trim();
         let mut node = ChooseNode {
             when_nodes: None,
             otherwise_node: None,

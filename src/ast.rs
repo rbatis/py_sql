@@ -1,6 +1,6 @@
 use rexpr::runtime::RExprRuntime;
 use serde_json::Value;
-use std::fmt::{Debug, Display};
+use std::fmt::{Debug};
 
 /// Abstract syntax tree node
 pub trait RbatisAST: Send + Sync + Debug {

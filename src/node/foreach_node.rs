@@ -3,9 +3,7 @@ use crate::node::node::do_child_nodes;
 use crate::node::node_type::NodeType;
 use rexpr::ast::Node;
 use rexpr::runtime::RExprRuntime;
-use serde_json::{json, Map, Value};
-use std::collections::HashMap;
-
+use serde_json::{json, Value};
 #[derive(Clone, Debug)]
 pub struct ForEachNode {
     pub childs: Vec<NodeType>,

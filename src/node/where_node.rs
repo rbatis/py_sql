@@ -1,4 +1,4 @@
-use serde_json::{json, Value};
+use serde_json::{Value};
 
 use crate::ast::RbatisAST;
 use crate::node::node::do_child_nodes;
@@ -16,7 +16,7 @@ impl WhereNode {
         express: &str,
         childs: Vec<NodeType>,
     ) -> Result<Self, crate::error::Error> {
-        let express = express[Self::name().len()..].trim();
+        //let express = express[Self::name().len()..].trim();
         return Ok(WhereNode { childs });
     }
 }

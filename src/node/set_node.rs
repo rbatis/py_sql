@@ -1,5 +1,4 @@
-use serde_json::{json, Value};
-
+use serde_json::{Value};
 use crate::ast::RbatisAST;
 use crate::node::node::do_child_nodes;
 use crate::node::node_type::NodeType;
@@ -16,7 +15,7 @@ impl SetNode {
         express: &str,
         childs: Vec<NodeType>,
     ) -> Result<Self, crate::error::Error> {
-        let trim_x = express[Self::name().len()..].trim();
+        //let trim_x = express[Self::name().len()..].trim();
         return Ok(SetNode { childs });
     }
 }
