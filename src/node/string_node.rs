@@ -55,32 +55,14 @@ impl RbatisAST for StringNode {
             }
             if value.starts_with("#") {
                 result = result.replace(value, convert.convert(arg_array.len()).as_str());
-                let get_v = env.get(item);
-                if get_v.is_none() {
-                    let v = node.eval(env)?;
-                    arg_array.push(v);
-                } else {
-                    let v = get_v.unwrap().clone();
-                    arg_array.push(v);
-                }
+                let v = node.eval(env)?;
+                arg_array.push(v);
             } else {
-                let v = env.get(item);
-                match v {
-                    Some(v) => {
-                        if v.is_string() {
-                            result = result.replace(value, &v.as_str().unwrap());
-                        } else {
-                            result = result.replace(value, &v.to_string());
-                        }
-                    }
-                    None => {
-                        let v = node.eval(env)?;
-                        if v.is_string() {
-                            result = result.replace(value, &v.as_str().unwrap());
-                        } else {
-                            result = result.replace(value, &v.to_string());
-                        }
-                    }
+                let v = node.eval(env)?;
+                if v.is_string() {
+                    result = result.replace(value, &v.as_str().unwrap());
+                } else {
+                    result = result.replace(value, &v.to_string());
                 }
             }
         }
