@@ -17,6 +17,6 @@ license = "Apache-2.0"
 [dependencies]
 #serde
 serde = { version = "1", features = ["derive"] }
-serde_json = { version = "1", features = ["preserve_order"] }
+serde_json = { version = "1" }
 rexpr = { version = "1.0" }
 dashmap = { version = "4" }
