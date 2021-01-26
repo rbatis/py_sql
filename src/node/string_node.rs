@@ -1,11 +1,11 @@
 use crate::ast::RbatisAST;
 
+use crate::string_util;
 use rexpr;
 use rexpr::ast::Node;
 use rexpr::runtime::RExprRuntime;
-use serde_json::{Value};
+use serde_json::Value;
 use std::collections::LinkedList;
-use crate::string_util;
 
 ///the stmt replace str convert
 pub trait StringConvert {

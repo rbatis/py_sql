@@ -2,7 +2,6 @@ use py_sql::py_sql::PyRuntime;
 use py_sql::{RExprRuntime, StringConvert};
 use rexpr::bencher::QPS;
 
-
 pub struct DriverType {}
 
 impl StringConvert for DriverType {

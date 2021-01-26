@@ -1,12 +1,12 @@
-use std::collections::HashMap;
 use dashmap::DashMap;
+use std::collections::HashMap;
 
 use rexpr::runtime::RExprRuntime;
 
 use serde_json::Value;
 
-use crate::error::Error;
 use crate::ast::RbatisAST;
+use crate::error::Error;
 use crate::node::bind_node::BindNode;
 use crate::node::choose_node::ChooseNode;
 use crate::node::foreach_node::ForEachNode;
@@ -15,7 +15,7 @@ use crate::node::node::do_child_nodes;
 use crate::node::node_type::NodeType;
 use crate::node::otherwise_node::OtherwiseNode;
 use crate::node::print_node::PrintNode;
-use crate::node::proxy_node::{NodeFactory};
+use crate::node::proxy_node::NodeFactory;
 use crate::node::set_node::SetNode;
 use crate::node::string_node::StringNode;
 use crate::node::trim_node::TrimNode;
@@ -57,12 +57,9 @@ impl PyRuntime {
                 do_child_nodes(driver_type, &v, env, engine, &mut arg_array, &mut sql)?;
             }
             _ => {
-                let nodes=Self::parse(engine, py_sql, &self.generate)?;
+                let nodes = Self::parse(engine, py_sql, &self.generate)?;
                 do_child_nodes(driver_type, &nodes, env, engine, &mut arg_array, &mut sql)?;
-                self.cache.insert(
-                    py_sql.to_string(),
-                    nodes,
-                );
+                self.cache.insert(py_sql.to_string(), nodes);
             }
         }
         sql = sql.trim().to_string();
@@ -226,9 +223,7 @@ impl PyRuntime {
                     for index in 0..len {
                         let index = len - 1 - index;
                         let item = vecs[index];
-                        childs = vec![Self::parse_trim_node(
-                            runtime, generates, item,  x, childs,
-                        )?];
+                        childs = vec![Self::parse_trim_node(runtime, generates, item, x, childs)?];
                         if index == 0 {
                             for x in &childs {
                                 main_node.push(x.clone());
@@ -238,8 +233,7 @@ impl PyRuntime {
                     }
                 }
             }
-            let node =
-                Self::parse_trim_node(runtime, generates, trim_x, x, childs)?;
+            let node = Self::parse_trim_node(runtime, generates, trim_x, x, childs)?;
             main_node.push(node);
             return Ok(());
         } else {

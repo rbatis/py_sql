@@ -1,5 +1,4 @@
-
-use std::collections::{LinkedList, HashSet};
+use std::collections::{HashSet, LinkedList};
 
 //2020-11-15 00:31:25.803227700 +08:00 INFO rbatis::plugin::log
 pub const LOG_SPACE: &'static str =
