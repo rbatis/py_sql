@@ -70,7 +70,6 @@ impl RbatisAST for ForEachNode {
         }
         if collection_value.is_array() {
             let collection = collection_value.as_array().unwrap();
-            let collection_len = collection.len() as i32;
             let mut env_temp = env.clone();
             let mut index = -1;
             for item in collection {
@@ -82,7 +81,6 @@ impl RbatisAST for ForEachNode {
             return Result::Ok(serde_json::Value::Null);
         } else if collection_value.is_object() {
             let collection = collection_value.as_object().unwrap();
-            let collection_len = collection.len() as i32;
             let mut env_temp = env.clone();
             let mut index = -1;
             for (key, item) in collection {
