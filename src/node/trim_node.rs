@@ -1,4 +1,4 @@
-use serde_json::{Value};
+use serde_json::Value;
 
 use crate::ast::RbatisAST;
 use crate::node::node::do_child_nodes;

@@ -54,9 +54,9 @@ impl From<&dyn std::error::Error> for Error {
     }
 }
 
-impl From<rexpr::error::Error> for Error{
+impl From<rexpr::error::Error> for Error {
     fn from(arg: rexpr::error::Error) -> Self {
-        return Error::from(arg.to_string())
+        return Error::from(arg.to_string());
     }
 }
 
