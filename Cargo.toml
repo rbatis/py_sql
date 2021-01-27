@@ -6,7 +6,7 @@ members = [
 
 [package]
 name = "py_sql"
-version = "1.0.0"
+version = "1.0.1"
 description = "Rust SQL wrapper lang"
 authors = ["zhuxiujie <zhuxiujia@qq.com>"]
 edition = "2018"
