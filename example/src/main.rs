@@ -16,8 +16,8 @@ fn main() {
         .eval(
             &DriverType {},
             "select * from table where
-                                                                                        if 1 == 1:
-                                                                                          1 = 1",
+                     if 1 == 1:
+                        1 = 1",
             &mut serde_json::json!({}),
             &expr_runtime,
         )
