@@ -22,5 +22,6 @@ fn main() {
             &expr_runtime,
         )
         .unwrap();
-    println!("sql:{},args:{:?}", sql, args);
+    println!("sql:{}", sql);
+    println!("args:{:?}", args);
 }
