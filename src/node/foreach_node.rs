@@ -75,13 +75,13 @@ impl RbatisAST for ForEachNode {
                 env[&self.item] = item.clone();
                 env[&self.index] = serde_json::Value::Number(serde_json::Number::from(index));
                 do_child_nodes(convert, &self.childs, env, engine, arg_array, arg_sql)?;
-            }
-            match env {
-                serde_json::Value::Object(obj) => {
-                    obj.remove(&self.item);
-                    obj.remove(&self.index);
+                match env {
+                    serde_json::Value::Object(obj) => {
+                        obj.remove(&self.item);
+                        obj.remove(&self.index);
+                    }
+                    _ => {}
                 }
-                _ => {}
             }
             return Result::Ok(serde_json::Value::Null);
         } else if collection_value.is_object() {
@@ -92,13 +92,13 @@ impl RbatisAST for ForEachNode {
                 env[&self.item] = item.clone();
                 env[&self.index] = serde_json::Value::String(key.to_string());
                 do_child_nodes(convert, &self.childs, env, engine, arg_array, arg_sql)?;
-            }
-            match env {
-                serde_json::Value::Object(obj) => {
-                    obj.remove(&self.item);
-                    obj.remove(&self.index);
+                match env {
+                    serde_json::Value::Object(obj) => {
+                        obj.remove(&self.item);
+                        obj.remove(&self.index);
+                    }
+                    _ => {}
                 }
-                _ => {}
             }
             return Result::Ok(serde_json::Value::Null);
         } else {
