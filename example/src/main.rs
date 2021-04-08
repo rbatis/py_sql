@@ -29,7 +29,7 @@ fn main() {
     println!("args:{:?}", args);
 }
 
-
+//(if:,string:,foreach:,print:)
 #[expr("@.s.string()+'f'")]
 pub fn add(arg: &serde_json::Value) -> py_sql::error::Result<serde_json::Value> {}
 
