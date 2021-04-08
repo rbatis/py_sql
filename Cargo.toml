@@ -12,11 +12,15 @@ authors = ["zhuxiujie <zhuxiujia@qq.com>"]
 edition = "2018"
 license = "Apache-2.0"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = ["rexpr"]
+debug_mode=["rexpr/debug_mode"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 #serde
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1" }
-rexpr = { version = "1.0" }
+rexpr = { version = "1.0" , git = "https://github.com/rbatis/rexpr", branch = "main",default-features = false, optional = true}
 dashmap = { version = "4" }

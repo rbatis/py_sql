@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate py_sql;
+
 use py_sql::py_sql::PyRuntime;
 use py_sql::{RExprRuntime, StringConvert};
 
@@ -24,4 +27,17 @@ fn main() {
         .unwrap();
     println!("sql:{}", sql);
     println!("args:{:?}", args);
+}
+
+
+#[expr("@.s.string()+'f'")]
+pub fn add(arg: &serde_json::Value) -> py_sql::error::Result<serde_json::Value> {}
+
+
+#[test]
+fn test_rexpr() {
+    let arg = serde_json::json!({
+        "s":"sss"
+    });
+    println!("{}", add(&arg).unwrap());
 }
