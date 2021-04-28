@@ -12,3 +12,5 @@ pub mod string_node;
 pub mod trim_node;
 pub mod when_node;
 pub mod where_node;
+#[macro_use]
+pub mod bencher;
